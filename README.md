@@ -25,8 +25,8 @@
 ## 🖼️ Capturas de Tela
 
 <p align="center">
-  <img src="assets/screenshot1.png" alt="Interface principal" width="400"/>
-  <img src="assets/screenshot2.png" alt="Progresso da geração" width="400"/>
+  <img src="Captura_de_tela_01.png" alt="Interface principal" width="400"/>
+  <img src="BCG2.0_LOGO.png" alt="Logo do Software" width="400"/>
 </p>
 
 ---
