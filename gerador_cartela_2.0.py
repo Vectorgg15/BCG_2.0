@@ -2,7 +2,7 @@ import customtkinter as ctk
 from tkinter import filedialog
 import pandas as pd
 import os
-import sys  # Import necessário para a função resource_path
+import sys
 from io import BytesIO
 from PyPDF2 import PdfWriter, PdfReader
 import cairosvg
@@ -11,19 +11,13 @@ from PIL import Image
 import threading
 import queue
 
-# --- FUNÇÃO PARA ENCONTRAR ARQUIVOS EMPACOTADOS ---
 def resource_path(relative_path):
-    """ Retorna o caminho absoluto para o recurso, funcionando tanto no modo dev quanto no PyInstaller """
     try:
-        # PyInstaller cria uma pasta temporária e armazena o caminho em _MEIPASS
         base_path = sys._MEIPASS
     except Exception:
-        # Se não estiver rodando como .exe, use o caminho normal do script
         base_path = os.path.abspath(".")
-
     return os.path.join(base_path, relative_path)
 
-# --- Configurações globais e Paleta de Cores ---
 ctk.set_appearance_mode("light")
 LOGO_RED = "#d40000"
 LOGO_RED_HOVER = "#a80000"
@@ -34,7 +28,6 @@ CANCEL_GRAY_HOVER = "#616161"
 BACKGROUND_CTK_COLOR = "#f0f2f5"
 TEXT_CTK_COLOR = "#333333"
 
-# --- Classe para a MessageBox Personalizada ---
 class CustomMessageBox(ctk.CTkToplevel):
     def __init__(self, master, title, message, msg_type="info"):
         super().__init__(master)
@@ -66,7 +59,6 @@ class CustomMessageBox(ctk.CTkToplevel):
         y = master.winfo_y() + (master.winfo_height() // 2) - (self.winfo_height() // 2)
         self.geometry(f"+{x}+{y}")
 
-
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -80,16 +72,15 @@ class App(ctk.CTk):
         self.cancel_flag = threading.Event()
         self.progress_queue = queue.Queue()
 
-        # --- UI ---
         top_frame = ctk.CTkFrame(self, fg_color="transparent")
         top_frame.pack(pady=10, padx=20, fill="x")
         self.title_label = ctk.CTkLabel(top_frame, text="GERADOR DE CARTELAS DE BINGO 2.0", font=ctk.CTkFont(family="Arial", size=18, weight="bold"), text_color=LOGO_BLUE)
         self.title_label.pack()
-        
+
         file_frame = ctk.CTkFrame(self, fg_color="transparent")
         file_frame.pack(pady=5, padx=20, fill="x")
         file_frame.grid_columnconfigure(1, weight=1)
-        
+
         ctk.CTkLabel(file_frame, text="Planilha Excel:", font=ctk.CTkFont(family="Arial", size=12), text_color=LOGO_BLUE).grid(row=0, column=0, sticky="w", padx=5)
         ctk.CTkEntry(file_frame, textvariable=self.excel_file_path, state="readonly", border_color=LOGO_BLUE_ACCENT).grid(row=0, column=1, sticky="ew")
         self.browse_excel_btn = ctk.CTkButton(file_frame, text="Procurar...", width=100, command=self._browse_excel_file, fg_color=LOGO_BLUE, hover_color=LOGO_BLUE_ACCENT)
@@ -99,13 +90,13 @@ class App(ctk.CTk):
         ctk.CTkEntry(file_frame, textvariable=self.template_svg_path, state="readonly", border_color=LOGO_BLUE_ACCENT).grid(row=1, column=1, sticky="ew", pady=5)
         self.browse_svg_btn = ctk.CTkButton(file_frame, text="Procurar...", width=100, command=self._browse_svg_file, fg_color=LOGO_BLUE, hover_color=LOGO_BLUE_ACCENT)
         self.browse_svg_btn.grid(row=1, column=2, padx=5, pady=5)
-        
+
         self.load_btn = ctk.CTkButton(file_frame, text="Carregar Planilha", command=self._load_dataframe, fg_color=LOGO_BLUE, hover_color=LOGO_BLUE_ACCENT)
         self.load_btn.grid(row=2, column=0, columnspan=3, pady=10)
-        
+
         generation_main_frame = ctk.CTkFrame(self, fg_color="transparent")
         generation_main_frame.pack(pady=10, padx=15, fill="both", expand=True)
-        
+
         self.interval_frame = ctk.CTkFrame(generation_main_frame, border_width=1, border_color=LOGO_BLUE_ACCENT)
         self.interval_frame.pack(side="left", fill="both", expand=True, padx=(0, 5))
         self.interval_frame.grid_columnconfigure(1, weight=1)
@@ -129,7 +120,7 @@ class App(ctk.CTk):
         ctk.CTkLabel(self.list_frame, text="").grid(row=2, column=0, padx=10, pady=5, sticky="w")
         self.list_btn = ctk.CTkButton(self.list_frame, text="GERAR CARTELAS ESPECÍFICAS", command=self._gerar_por_lista, fg_color=LOGO_RED, hover_color=LOGO_RED_HOVER)
         self.list_btn.grid(row=3, column=0, columnspan=2, pady=15)
-        
+
         status_frame = ctk.CTkFrame(self, fg_color="transparent")
         status_frame.pack(side=ctk.BOTTOM, fill="x", pady=5, padx=20)
         self.progress_label = ctk.CTkLabel(status_frame, text="Pronto para gerar.", font=ctk.CTkFont(family="Arial", size=10))
@@ -140,7 +131,6 @@ class App(ctk.CTk):
         footer_frame = ctk.CTkFrame(self, fg_color="transparent")
         footer_frame.pack(side=ctk.BOTTOM, fill="x", pady=(0, 10))
         try:
-            # USA A FUNÇÃO resource_path PARA ENCONTRAR A LOGO
             logo_path = resource_path("Logo_Paróquia_ Alta Definição.png")
             logo_image = ctk.CTkImage(Image.open(logo_path), size=(67, 85))
             logo_label = ctk.CTkLabel(footer_frame, image=logo_image, text="")
@@ -151,8 +141,7 @@ class App(ctk.CTk):
             print(f"Erro ao carregar a logo: {e}")
         self.signature_label = ctk.CTkLabel(footer_frame, text="por Victor Manuel", font=ctk.CTkFont(family="Arial", size=8), text_color="#666666")
         self.signature_label.pack()
-        
-        # Inicia o monitoramento da fila de progresso
+
         self._process_queue()
 
     def _toggle_ui_state(self, is_generating):
@@ -167,7 +156,7 @@ class App(ctk.CTk):
     def _cancelar_geracao(self):
         self.progress_label.configure(text="Cancelando...")
         self.cancel_flag.set()
-        
+
     def _process_queue(self):
         try:
             message = self.progress_queue.get_nowait()
@@ -186,22 +175,24 @@ class App(ctk.CTk):
                 self.progress_label.configure(text="Erro na geração.")
                 self._toggle_ui_state(False)
                 self._show_custom_messagebox("Erro Inesperado", f"Ocorreu um erro durante a geração:\n{data}", "error")
-        
         except queue.Empty:
             pass
         finally:
             self.after(100, self._process_queue)
 
     def _gerar_pdf_base(self, indices_para_gerar, nome_arquivo_saida):
-        if self.df is None: return self._show_custom_messagebox("Erro", "A planilha não foi carregada.", "error")
+        if self.df is None:
+            return self._show_custom_messagebox("Erro", "A planilha não foi carregada.", "error")
         template_path = self.template_svg_path.get()
-        if not template_path: return self._show_custom_messagebox("Erro", "Selecione um arquivo de modelo SVG.", "error")
-        if not os.path.exists(template_path): return self._show_custom_messagebox("Erro", f"Modelo '{os.path.basename(template_path)}' não encontrado.", "error")
-        
+        if not template_path:
+            return self._show_custom_messagebox("Erro", "Selecione um arquivo de modelo SVG.", "error")
+        if not os.path.exists(template_path):
+            return self._show_custom_messagebox("Erro", f"Modelo '{os.path.basename(template_path)}' não encontrado.", "error")
+
         self.cancel_flag.clear()
         self._toggle_ui_state(is_generating=True)
         self.progress_label.configure(text="Iniciando geração...")
-        
+
         thread = threading.Thread(target=self._worker_gerar_pdf, args=(indices_para_gerar, nome_arquivo_saida, template_path))
         thread.start()
 
@@ -209,10 +200,10 @@ class App(ctk.CTk):
         try:
             with open(template_path, 'r', encoding='utf-8-sig') as f:
                 template_content = f.read()
-            
+
             pdf_writer = PdfWriter()
             total_cartelas = len(indices_para_gerar)
-            
+
             for count, i in enumerate(indices_para_gerar):
                 if self.cancel_flag.is_set():
                     self.progress_queue.put(("cancelled", None))
@@ -221,7 +212,7 @@ class App(ctk.CTk):
                 cartela_data = self.df.iloc[i]
                 progress_text = f"Processando {count + 1}/{total_cartelas} (Cartela N° {cartela_data['N']})..."
                 self.progress_queue.put(("progress", progress_text))
-                
+
                 svg_final_content = template_content
                 for col_name, value in cartela_data.items():
                     placeholder_sem_chaves = str(col_name).upper()
@@ -234,64 +225,24 @@ class App(ctk.CTk):
                 cairosvg.svg2pdf(bytestring=svg_final_content.encode('utf-8'), write_to=pdf_page_bytes)
                 pdf_page_bytes.seek(0)
                 pdf_writer.add_page(PdfReader(pdf_page_bytes).pages[0])
-            
+
             with open(nome_arquivo_saida, "wb") as f:
                 pdf_writer.write(f)
-            
+
             self.progress_queue.put(("done", nome_arquivo_saida))
 
         except Exception as e:
             print(f"ERRO NA THREAD DE GERAÇÃO: {e}")
             self.progress_queue.put(("error", str(e)))
-        
+
     def _gerar_por_intervalo(self):
         try:
             inicio = int(self.entry_inicio.get())
             fim = int(self.entry_fim.get())
-        except ValueError: return self._show_custom_messagebox("Erro", "Valores de início e fim devem ser números.", "error")
-        
+        except ValueError:
+            return self._show_custom_messagebox("Erro", "Valores de início e fim devem ser números.", "error")
+
         numeros_no_intervalo = list(range(inicio, fim + 1))
         indices = self.df.index[self.df['N'].isin(numeros_no_intervalo)].tolist()
-        if not indices: return self._show_custom_messagebox("Aviso", f"Nenhuma cartela com número entre {inicio} e {fim} foi encontrada.", "warning")
-        self._gerar_pdf_base(indices, "cartelas_por_intervalo.pdf")
-
-    def _gerar_por_lista(self):
-        numeros_str = self.entry_lista.get()
-        if not numeros_str: return self._show_custom_messagebox("Aviso", "Digite os números das cartelas para gerar.", "warning")
-        
-        try:
-            numeros_desejados = {int(n.strip()) for n in numeros_str.split(',') if n.strip()}
-        except ValueError: return self._show_custom_messagebox("Erro", "Digite apenas números separados por vírgula.", "error")
-        
-        indices = self.df.index[self.df['N'].isin(numeros_desejados)].tolist()
-        if not indices: return self._show_custom_messagebox("Aviso", "Nenhuma das cartelas especificadas foi encontrada.", "warning")
-        self._gerar_pdf_base(indices, "cartelas_especificas.pdf")
-        
-    def _show_custom_messagebox(self, title, message, msg_type="info"):
-        CustomMessageBox(self, title, message, msg_type)
-
-    def _browse_excel_file(self):
-        path = filedialog.askopenfilename(title="Selecionar Planilha Excel", filetypes=[("Excel", "*.xlsx;*.xls")])
-        if path: self.excel_file_path.set(path)
-
-    def _browse_svg_file(self):
-        path = filedialog.askopenfilename(title="Selecionar Modelo SVG", filetypes=[("SVG", "*.svg")])
-        if path: self.template_svg_path.set(path)
-
-    def _load_dataframe(self):
-        path = self.excel_file_path.get()
-        if not path: return self._show_custom_messagebox("Aviso", "Selecione um arquivo Excel.", "warning")
-        try:
-            self.df = pd.read_excel(path)
-            self.df.columns = self.df.columns.str.strip().str.upper()
-            if 'N' not in self.df.columns:
-                self._show_custom_messagebox("Erro", "Coluna 'N' não encontrada na planilha.", "error")
-                self.df = None
-                return
-            self._show_custom_messagebox("Sucesso!", f"Planilha '{os.path.basename(path)}' carregada!", "success")
-        except Exception as e: self._show_custom_messagebox("Erro", f"Não foi possível carregar a planilha:\n{e}", "error")
-
-
-if __name__ == "__main__":
-    app = App()
-    app.mainloop()
+        if not indices:
+            return self._show_custom_messagebox("Aviso", f"Nenhuma cartela com número entre {inicio} e {fim} foi encontrada.", "warn_
