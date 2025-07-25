@@ -26,7 +26,6 @@
 
 <p align="center">
   <img src="Captura_de_tela_01.png" alt="Interface principal" width="400"/>
-  <img src="BCG2.0_LOGO.png" alt="Logo do Software" width="400"/>
 </p>
 
 ---
