@@ -1,4 +1,4 @@
-<h1 align="center">🎲 Gerador de Cartelas de Bingo 2.0</h1>
+<h1 align="center">🎲 Bingo Card Generator 2.0</h1>
 
 <p align="center">
   Uma aplicação moderna e intuitiva para gerar cartelas de bingo personalizadas em PDF.
