@@ -1,2 +1,2 @@
-*.tex linguist-vendored
-*.html linguist-vendored
+*.html linguist-detectable=false
+
