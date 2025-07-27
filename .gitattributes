@@ -1,4 +1,4 @@
-*.html linguist-detectable=false
-*.tex linguist-detectable=false
-*.cls linguist-detectable=false
-*.sty linguist-detectable=false
+*.html linguist-documentation
+*.tex linguist-documentation
+*.sty linguist-documentation
+*.cls linguist-documentation
