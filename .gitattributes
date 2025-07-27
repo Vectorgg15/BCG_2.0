@@ -1,4 +1,6 @@
-*.html linguist-documentation
-*.tex linguist-documentation
-*.sty linguist-documentation
-*.cls linguist-documentation
+*.tex linguist-vendored
+*.cls linguist-vendored
+*.sty linguist-vendored
+*.bib linguist-vendored
+*.bst linguist-vendored
+*.html linguist-vendored
