@@ -1,4 +1,4 @@
-# 🎲 Bingo Card Generator 2.0
+# 🎲 Bingo Card Generator 2.0 (BCG_2.0)
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Concluído-brightgreen?style=for-the-badge)
