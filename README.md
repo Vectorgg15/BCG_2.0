@@ -34,7 +34,7 @@ O projeto foi desenvolvido com foco em:
 ### 🖼️ Capturas de Tela
 
 <p align="center">
-  <img src="https://github.com/Vectorgg15/BCG_2.0/raw/main/Screenshot_BCG_2.0.png" alt="Interface principal" width="700"/>
+  <img src="https://github.com/Vectorgg15/BCG_2.0/raw/main/assets/Screenshot_BCG_2.0.png" alt="Interface principal" width="700"/>
 </p>
 
 ---
