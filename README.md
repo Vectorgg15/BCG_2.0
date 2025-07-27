@@ -1,28 +1,37 @@
-<h1 align="center">🎲 Bingo Card Generator 2.0</h1>
+# 🎲 Bingo Card Generator 2.0
 
-<p align="center">
-  Uma aplicação moderna e intuitiva para gerar cartelas de bingo personalizadas em PDF.
-</p>
+![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Concluído-brightgreen?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-informational?style=for-the-badge)
 
-<p align="center">
-  <img src="https://img.shields.io/github/license/Vectorgg15/BCG_2.0?style=flat-square" />
-  <img src="https://img.shields.io/github/languages/top/Vectorgg15/BCG_2.0?style=flat-square" />
-  <img src="https://img.shields.io/github/last-commit/Vectorgg15/BCG_2.0?style=flat-square" />
-</p>
+Uma aplicação de desktop moderna e intuitiva para gerar e exportar centenas de cartelas de bingo personalizadas em formato PDF, com base em modelos SVG e dados de planilhas Excel.
 
----
+### Sobre o Projeto
 
-## 🧩 Funcionalidades
+O Bingo Card Generator 2.0 foi criado para resolver um problema comum em eventos: a necessidade de gerar um grande volume de cartelas de bingo únicas de forma rápida e com um design personalizado. A aplicação combina um backend robusto para processamento de dados com uma interface gráfica limpa e amigável.
 
-- 🧾 Geração automática de cartelas em formato PDF
-- 🧠 Interface moderna com `CustomTkinter`
-- 🎯 Suporte a modelos SVG e planilhas Excel
-- 📤 Exportação em lote com barra de progresso
-- ⛔ Cancelamento da geração com segurança
+O projeto foi desenvolvido com foco em:
+- **Eficiência:** Geração em lote a partir de uma planilha, com uma barra de progresso para acompanhar o processo.
+- **Flexibilidade:** Permite que o usuário crie seu próprio design de cartela usando um modelo SVG, que pode ser editado em softwares como o CorelDRAW ou Inkscape.
+- **Interface Intuitiva:** Construído com `CustomTkinter` para uma experiência de usuário moderna e agradável.
+- **Segurança:** O usuário pode cancelar a geração a qualquer momento de forma segura, sem corromper os arquivos.
 
 ---
 
-## 🖼️ Capturas de Tela
+### ✨ Principais Funcionalidades
+
+- **Geração a partir de Planilhas:** Importa os dados das cartelas diretamente de um arquivo Excel (`.xlsx`), usando a coluna `N` como identificador.
+- **Design via Modelo SVG:** Utiliza um arquivo SVG como template, substituindo marcadores de texto (ex: `{{B1}}`, `{{N}}`) pelos dados da planilha para criar cada cartela.
+- **Exportação em Lote para PDF:** Gera todas as cartelas da planilha e as consolida em um único arquivo PDF, pronto para impressão.
+- **Interface Gráfica Completa:**
+    - Botões para selecionar o arquivo Excel e o modelo SVG.
+    - Barra de progresso visual que mostra o andamento da geração.
+    - Botão de "Cancelar" para interromper o processo com segurança.
+    - Feedback em tempo real através de um console de status na própria interface.
+
+---
+
+### 🖼️ Capturas de Tela
 
 <p align="center">
   <img src="https://github.com/Vectorgg15/BCG_2.0/raw/main/Captura_de_tela_01.png" alt="Interface principal" width="700"/>
@@ -30,49 +39,49 @@
 
 ---
 
-## 🚀 Instalação e Uso
+### 🛠️ Tecnologias Utilizadas
 
-### 1. Requisitos
-- Python 3.8+
-- Bibliotecas: `customtkinter`, `pandas`, `cairosvg`, `PyPDF2`, `Pillow`
-
-### 2. Instalação
-Primeiro, clone o repositório para a sua máquina. Depois, navegue até a pasta do projeto e instale todas as dependências com um único comando:
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Execução
-Para iniciar o programa, execute o seguinte comando no seu terminal:
-```bash
-python gerador_cartela_2.0.py
-```
+- **Python 3.8+**
+- **CustomTkinter:** Para a construção da interface gráfica moderna.
+- **Pandas:** Para a leitura e manipulação eficiente dos dados da planilha Excel.
+- **CairoSVG:** Para converter os modelos SVG em formato PNG.
+- **PyPDF2:** Para unir as cartelas geradas em um único arquivo PDF.
+- **Pillow (PIL):** Para o processamento de imagens intermediário.
 
 ---
 
-## 📄 Arquivos e Formato
+### 🚀 Como Executar o Projeto
 
-Para gerar as cartelas, você precisará de dois arquivos: uma **Planilha Excel** com os dados e um **Modelo SVG** para o design.
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/Vectorgg15/BCG_2.0.git](https://github.com/Vectorgg15/BCG_2.0.git)
+    cd BCG_2.0
+    ```
 
-### Planilha Excel (.xlsx)
-A planilha deve conter os dados de cada cartela. É obrigatório que exista uma coluna chamada `N` para o número da cartela. Os nomes das outras colunas (ex: `B1`, `I1`, `N1`...) serão usados para substituir os textos correspondentes no modelo SVG.
+2.  **Crie e ative um ambiente virtual (Recomendado):**
+    ```bash
+    python -m venv venv
+    # No Windows
+    venv\Scripts\activate
+    # No macOS/Linux
+    # source venv/bin/activate
+    ```
 
-**Exemplo:**
-| N   | B1 | B2 | I1 | I2 | ... |
-| --- | -- | -- | -- | -- | --- |
-| 1   | 5  | 12 | 16 | 22 | ... |
-| 2   | 3  | 15 | 28 | 17 | ... |
+3.  **Instale as dependências:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
+4.  **Execute o aplicativo:**
+    ```bash
+    python gerador_cartela_2.0.py
+    ```
+    *Observação: Certifique-se de ter um arquivo de modelo (`.svg`) e uma planilha de dados (`.xlsx`) prontos para usar no programa.*
 
-### Modelo SVG (.svg)
-Este arquivo é o template visual da sua cartela.
+---
 
-#### **Como criar o seu modelo a partir do CorelDRAW:**
-[cite_start]Conforme solicitado, você pode usar o arquivo `cartela bingo 2.0.cdr` [cite: 1] que está no projeto:
-1. Abra o arquivo `cartela bingo 2.0.cdr` no CorelDRAW.
-2. Edite **apenas os detalhes visuais** da cartela (cores, fontes, imagens de fundo, etc.).
-3. **Não altere** os campos de texto que contêm os números (ex: `{{B1}}`, `{{N}}`), pois eles são os marcadores que o programa usa para gerar as cartelas.
-4. Após finalizar o design, vá em `Arquivo > Exportar` e salve o arquivo com o formato **SVG**.
+### 📄 Licença
 
-Este arquivo SVG exportado será o seu modelo para usar no programa.
+Este projeto está sob a Licença MIT.
+
+**Desenvolvido por Victor Manuel com 💙**
