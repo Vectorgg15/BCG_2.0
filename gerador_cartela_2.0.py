@@ -70,7 +70,7 @@ class CustomMessageBox(ctk.CTkToplevel):
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("Gerador de Cartelas de Bingo 2.0")
+        self.title("BCG_2.0")
         self.geometry("700x550")
         self.resizable(False, False)
 
@@ -83,7 +83,7 @@ class App(ctk.CTk):
         # --- UI ---
         top_frame = ctk.CTkFrame(self, fg_color="transparent")
         top_frame.pack(pady=10, padx=20, fill="x")
-        self.title_label = ctk.CTkLabel(top_frame, text="GERADOR DE CARTELAS DE BINGO 2.0", font=ctk.CTkFont(family="Arial", size=18, weight="bold"), text_color=LOGO_BLUE)
+        self.title_label = ctk.CTkLabel(top_frame, text="🎲 Bingo Card Generator 2.0 (BCG_2.0)", font=ctk.CTkFont(family="Arial", size=18, weight="bold"), text_color=LOGO_BLUE)
         self.title_label.pack()
         
         file_frame = ctk.CTkFrame(self, fg_color="transparent")
@@ -141,7 +141,7 @@ class App(ctk.CTk):
         footer_frame.pack(side=ctk.BOTTOM, fill="x", pady=(0, 10))
         try:
             # USA A FUNÇÃO resource_path PARA ENCONTRAR A LOGO
-            logo_path = resource_path("Logo_Paróquia_ Alta Definição.png")
+            logo_path = resource_path("assets/Logo_Paróquia_ Alta Definição.png")
             logo_image = ctk.CTkImage(Image.open(logo_path), size=(67, 85))
             logo_label = ctk.CTkLabel(footer_frame, image=logo_image, text="")
             logo_label.pack()
